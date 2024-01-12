@@ -60224,7 +60224,7 @@ class OrbitControls extends three__WEBPACK_IMPORTED_MODULE_0__.EventDispatcher {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("9ad1bcbbeaa84131b5d5")
+/******/ 		__webpack_require__.h = () => ("dd6b25c38353235b3fa2")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
@@ -60597,6 +60597,14 @@ let renderer;
 let planeGeometry;
 let planeMaterial;
 let planeMesh;
+let boxGeometry;
+let boxMaterial;
+let boxMesh;
+let sphereGeometry;
+let sphereMaterial;
+let sphereMesh;
+var orbitRadius;
+let angle = 0;
 let frontLight;
 let backLight;
 let gui;
@@ -60619,6 +60627,24 @@ function generatePlane() {
   });
   planeMesh = new three__WEBPACK_IMPORTED_MODULE_2__.Mesh(planeGeometry, planeMaterial);
   scene.add(planeMesh);
+}
+function generateBox() {
+  boxGeometry = new three__WEBPACK_IMPORTED_MODULE_2__.BoxGeometry(1, 1, 1);
+  boxMaterial = new three__WEBPACK_IMPORTED_MODULE_2__.MeshPhongMaterial({
+    color: 0x0000ff,
+    side: three__WEBPACK_IMPORTED_MODULE_2__.DoubleSide
+  });
+  boxMesh = new three__WEBPACK_IMPORTED_MODULE_2__.Mesh(boxGeometry, boxMaterial);
+  scene.add(boxMesh);
+}
+function generateSphere() {
+  sphereGeometry = new three__WEBPACK_IMPORTED_MODULE_2__.SphereGeometry(0.5);
+  sphereMaterial = new three__WEBPACK_IMPORTED_MODULE_2__.MeshPhongMaterial({
+    color: 0x0000ff,
+    side: three__WEBPACK_IMPORTED_MODULE_2__.DoubleSide
+  });
+  sphereMesh = new three__WEBPACK_IMPORTED_MODULE_2__.Mesh(sphereGeometry, sphereMaterial);
+  scene.add(sphereMesh);
 }
 
 // ---------------------- public functions
@@ -60643,6 +60669,20 @@ function setupLights() {
 }
 function animate() {
   requestAnimationFrame(animate);
+
+  // box animation
+  boxMesh.rotation.x += 0.05;
+  boxMesh.rotation.z += 0.05;
+
+  // sphere animation
+  sphereMesh.position.x = 2;
+  sphereMesh.position.y = 2;
+  orbitRadius = 2.7;
+  sphereMesh.position.x = Math.sin(angle) * orbitRadius;
+  sphereMesh.position.y = Math.cos(angle) * orbitRadius;
+
+  // increase the angle
+  angle += 0.01;
   renderer.render(scene, camera);
 }
 function addOrbitControls() {
@@ -60658,10 +60698,15 @@ function addDatGUI() {
 function main() {
   setupScene();
   setupRenderer();
-  generatePlane();
   setupLights();
-  addOrbitControls();
-  addDatGUI();
+
+  // generatePlane();
+  generateBox();
+  generateSphere();
+
+  // addOrbitControls();
+  // addDatGUI();
+
   animate();
 }
 main();

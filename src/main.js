@@ -13,6 +13,16 @@ let planeGeometry;
 let planeMaterial;
 let planeMesh;
 
+let boxGeometry;
+let boxMaterial;
+let boxMesh;
+
+let sphereGeometry;
+let sphereMaterial;
+let sphereMesh;
+var orbitRadius;
+let angle = 0;
+
 let frontLight;
 let backLight;
 
@@ -36,6 +46,24 @@ function generatePlane() {
     planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
 
     scene.add(planeMesh);
+}
+
+function generateBox() {
+    boxGeometry = new THREE.BoxGeometry(1, 1, 1);
+    boxMaterial = new THREE.MeshPhongMaterial({ color: 0x0000ff, side: THREE.DoubleSide });
+
+    boxMesh = new THREE.Mesh(boxGeometry, boxMaterial);
+
+    scene.add(boxMesh);
+}
+
+function generateSphere() {
+    sphereGeometry = new THREE.SphereGeometry(0.5);
+    sphereMaterial = new THREE.MeshPhongMaterial({ color: 0x0000ff, side: THREE.DoubleSide });
+
+    sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+
+    scene.add(sphereMesh);
 }
 
 // ---------------------- public functions
@@ -65,6 +93,22 @@ function setupLights() {
 
 function animate() {
     requestAnimationFrame(animate);
+
+    // box animation
+    boxMesh.rotation.x += 0.05;
+    boxMesh.rotation.z += 0.05;
+
+    // sphere animation
+    sphereMesh.position.x = 2;
+    sphereMesh.position.y = 2;
+
+    orbitRadius = 2.7;
+    sphereMesh.position.x = Math.sin(angle) * orbitRadius;
+    sphereMesh.position.y = Math.cos(angle) * orbitRadius;
+
+    // increase the angle
+    angle += 0.01;
+
     renderer.render(scene, camera);
 }
 
@@ -83,11 +127,14 @@ function addDatGUI() {
 function main() {
     setupScene();
     setupRenderer();
-    generatePlane();
     setupLights();
 
-    addOrbitControls();
-    addDatGUI();
+    // generatePlane();
+    generateBox();
+    generateSphere();
+
+    // addOrbitControls();
+    // addDatGUI();
 
     animate();
 }
