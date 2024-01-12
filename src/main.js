@@ -2,6 +2,7 @@
 import "./../sass/styles.scss";
 
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 let scene;
 let camera;
@@ -11,7 +12,8 @@ let planeGeometry;
 let planeMaterial;
 let planeMesh;
 
-let light;
+let frontLight;
+let backLight;
 
 // ---------------------- public functions
 function setupScene() {
@@ -38,15 +40,22 @@ function generatePlane() {
 }
 
 function setupLights() {
-    light = new THREE.DirectionalLight(0xffffff, 15);
-    light.position.set(0, 0, 1);
-    console.log(light);
-    scene.add(light);
+    frontLight = new THREE.DirectionalLight(0xffffff, 15);
+    frontLight.position.set(0, 0, 1);
+    scene.add(frontLight);
+
+    backLight = new THREE.DirectionalLight(0xffffff, 15);
+    backLight.position.set(0, 0, -1);
+    scene.add(backLight);
 }
 
 function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
+}
+
+function addOrbitControls() {
+    new OrbitControls(camera, renderer.domElement);
 }
 
 // ---------------------- main function
@@ -55,6 +64,7 @@ function main() {
     setupRenderer();
     generatePlane();
     setupLights();
+    addOrbitControls();
 
     animate();
 }
