@@ -2784,7 +2784,7 @@ module.exports.formatError = function (err) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("a06932dacf7476d0bfb5")
+/******/ 		__webpack_require__.h = () => ("ff39ca3e181c32e886db")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
@@ -3145,6 +3145,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _sass_styles_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../sass/styles.scss */ "./sass/styles.scss");
 // importing the sass stylesheet for bundling
 
+
+
+// ---------------------- public functions
+
+// ---------------------- main function
 function main() {}
 main();
 })();
