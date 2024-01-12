@@ -3,6 +3,7 @@ import "./../sass/styles.scss";
 
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import * as dat from "dat.gui";
 
 let scene;
 let camera;
@@ -14,6 +15,28 @@ let planeMesh;
 
 let frontLight;
 let backLight;
+
+let gui;
+let world = {
+    plane: {
+        width: 5,
+        height: 5,
+        widthSegments: 10,
+        heightSegments: 10
+    }
+};
+
+// ---------------------- event handler
+function generatePlane() {
+    scene.remove(planeMesh);
+
+    planeGeometry = new THREE.PlaneGeometry(world.plane.width, world.plane.height, world.plane.widthSegments, world.plane.heightSegments);
+    planeMaterial = new THREE.MeshPhongMaterial({ color: 0x0000ff, side: THREE.DoubleSide });
+
+    planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
+
+    scene.add(planeMesh);
+}
 
 // ---------------------- public functions
 function setupScene() {
@@ -28,15 +51,6 @@ function setupRenderer() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     document.body.appendChild(renderer.domElement);
-}
-
-function generatePlane() {
-    planeGeometry = new THREE.PlaneGeometry(5, 5, 10, 10);
-    planeMaterial = new THREE.MeshPhongMaterial({ color: 0x0000ff, side: THREE.DoubleSide });
-
-    planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
-
-    scene.add(planeMesh);
 }
 
 function setupLights() {
@@ -58,13 +72,22 @@ function addOrbitControls() {
     new OrbitControls(camera, renderer.domElement);
 }
 
+function addDatGUI() {
+    gui = new dat.GUI();
+
+    gui.add(world.plane, "width", 1, 20).onChange(generatePlane);
+    gui.add(world.plane, "height", 1, 20).onChange(generatePlane);
+}
+
 // ---------------------- main function
 function main() {
     setupScene();
     setupRenderer();
     generatePlane();
     setupLights();
+
     addOrbitControls();
+    addDatGUI();
 
     animate();
 }
