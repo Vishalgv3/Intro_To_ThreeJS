@@ -41,7 +41,7 @@ function generatePlane() {
     scene.remove(planeMesh);
 
     planeGeometry = new THREE.PlaneGeometry(world.plane.width, world.plane.height, world.plane.widthSegments, world.plane.heightSegments);
-    planeMaterial = new THREE.MeshPhongMaterial({ color: 0x0000ff, side: THREE.DoubleSide });
+    planeMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000, side: THREE.DoubleSide });
 
     planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
 
@@ -129,7 +129,7 @@ function main() {
     setupRenderer();
     setupLights();
 
-    // generatePlane();
+    generatePlane();
     generateBox();
     generateSphere();
 
