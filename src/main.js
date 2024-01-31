@@ -21,8 +21,6 @@ let world = {
     plane: {
         width: 5,
         height: 5,
-        widthSegments: 10,
-        heightSegments: 10
     }
 };
 
@@ -30,7 +28,7 @@ let world = {
 function generatePlane() {
     scene.remove(planeMesh);
 
-    planeGeometry = new THREE.PlaneGeometry(world.plane.width, world.plane.height, world.plane.widthSegments, world.plane.heightSegments);
+    planeGeometry = new THREE.PlaneGeometry(world.plane.width, world.plane.height);
     planeMaterial = new THREE.MeshPhongMaterial({ color: 0x0000ff, side: THREE.DoubleSide });
 
     planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
@@ -65,6 +63,9 @@ function setupLights() {
 
 function animate() {
     requestAnimationFrame(animate);
+
+    // animation logic...
+
     renderer.render(scene, camera);
 }
 
